@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Equipment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="add-equipment-container">
+        <h2>Add New Equipment</h2>
+        <form method="POST" action="{{ url_for('add_equipment') }}">
+            <label for="name">Equipment Name:</label>
+            <input type="text" name="name" id="name" required>
+            
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" required>
+            
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+            
+            <label for="min_quantity">Minimum Quantity:</label>
+            <input type="number" name="min_quantity" id="min_quantity" required>
+            
+            <button type="submit">Add Equipment</button>
+        </form>
+        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

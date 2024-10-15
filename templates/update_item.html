@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Equipment Quantity</title>
+</head>
+<body>
+    <h2>Update Equipment Quantity</h2>
+    <form method="POST" action="{{ url_for('update_item') }}">
+        <label for="item_id">Select Equipment:</label>
+        <select name="item_id" id="item_id">
+            {% for item in items %}
+            <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="change_in_quantity">Change in Quantity:</label>
+        <input type="number" name="change_in_quantity" id="change_in_quantity" required>
+        <br>
+        <button type="submit">Update Quantity</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

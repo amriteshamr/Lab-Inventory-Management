@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for Equipment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="search-equipment-container">
+        <h2>Search for Equipment</h2>
+        <form method="POST" action="{{ url_for('search_item') }}">
+            <label for="search_query">Equipment Name:</label>
+            <input type="text" name="search_query" id="search_query" required>
+            <button type="submit">Search</button>
+        </form>
+        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

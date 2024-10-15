@@ -1,0 +1,214 @@
+/* Common styles for both login and dashboard */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Login container */
+.login-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Flash messages */
+.error-message {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+/* Dashboard styles */
+.dashboard-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-header {
+    background-color: #28a745;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+
+.dashboard-content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 80%;
+    max-width: 800px;
+    margin-top: 1rem;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.table, .inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td, .inventory-table th, .inventory-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th, .inventory-table th {
+    background-color: #28a745;
+    color: white;
+}
+
+.table tbody tr:nth-child(even), .inventory-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.inventory-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Add Equipment Styles */
+.add-equipment-container {
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+    margin: 3rem auto; /* Centering the container */
+}
+
+label {
+    display: block; /* Ensure labels take up the full width */
+    margin: 10px 0 5px; /* Spacing around labels */
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside input */
+    margin-bottom: 20px; /* Spacing between input fields */
+    border: 1px solid #ccc; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+}
+
+button {
+    background-color: #28a745; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside button */
+    cursor: pointer; /* Pointer on hover */
+    width: 100%; /* Full width */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+button:hover {
+    background-color: #218838; /* Darker shade on hover */
+}
+
+.back-link {
+    display: block; /* Make the link a block element */
+    text-align: center; /* Center align the link */
+    margin-top: 20px; /* Spacing above the link */
+    text-decoration: none; /* No underline */
+    color: #007bff; /* Link color */
+}
+
+.back-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* View Inventory Styles */
+.view-inventory-container, .search-equipment-container, .search-results-container {
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    margin: 3rem auto; /* Centering the container */
+}
+
+/* styles.css */
+
+/* Common styles for both login and dashboard */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.login-container {
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px; /* Limit width for mobile */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem; /* Space below heading */
+}
+
+label {
+    display: block; /* Ensure labels take up the full width */
+    margin: 10px 0 5px; /* Spacing around labels */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside input */
+    margin-bottom: 20px; /* Spacing between input fields */
+    border: 1px solid #ccc; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#login-btn {
+    background-color: #28a745; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside button */
+    cursor: pointer; /* Pointer on hover */
+    width: 100%; /* Full width */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+#login-btn:hover {
+    background-color: #218838; /* Darker shade on hover */
+}

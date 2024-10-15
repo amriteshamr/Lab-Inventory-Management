@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Equipment</title>
+</head>
+<body>
+    <h2>Delete Equipment</h2>
+    <form method="POST" action="{{ url_for('delete_item') }}">
+        <label for="item_id">Select Equipment to Delete:</label>
+        <select name="item_id" id="item_id">
+            {% for item in items %}
+            <option value="{{ item.id }}">{{ item.name }} (Quantity: {{ item.quantity }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Delete Equipment</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

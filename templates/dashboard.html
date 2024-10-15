@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Lab Inventory Management</h2>
+        </div>
+        
+        <div class="dashboard-content">
+            <ul class="dashboard-menu">
+                <li><a class="menu-item" href="{{ url_for('view_inventory') }}">View Entire Inventory</a></li>
+                <li><a class="menu-item" href="{{ url_for('search_item') }}">Search for Equipment</a></li>
+                <li><a class="menu-item" href="{{ url_for('add_equipment') }}">Add New Equipment</a></li>
+                <li><a class="menu-item" href="{{ url_for('update_item') }}">Update Equipment Details</a></li>
+                <li><a class="menu-item" href="{{ url_for('delete_item') }}">Delete Equipment</a></li>
+                <li><a class="menu-item" href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
