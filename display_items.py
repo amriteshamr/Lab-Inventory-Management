@@ -10,7 +10,7 @@ def display_items():
     
     # Display the items
     for item in items:
-        print(f"Item ID: {item.id}, Name: {item.name}, Quantity: {item.quantity}, Location: {item.location}")
+        print(f"Item ID: {item.id}, Name: {item.name}, Quantity: {item.quantity}, Stack: {item.location_stack}, Row: {item.location_row}, Box: {item.location_box}")
     
     db.close()
 

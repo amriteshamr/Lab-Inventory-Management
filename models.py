@@ -16,7 +16,9 @@ class Item(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     quantity = Column(Integer, default=0)
-    location = Column(String)
+    location_stack = Column(String)
+    location_row = Column(String)
+    location_box = Column(String)
     min_quantity = Column(Integer, default=1)  # Default minimum quantity
 
 # Create the database tables

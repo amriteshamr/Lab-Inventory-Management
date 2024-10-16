@@ -16,7 +16,9 @@
                 <tr>
                     <th>Name</th>
                     <th>Quantity</th>
-                    <th>Location</th>
+                    <th>Location Stack</th>
+                    <th>Location Row</th>
+                    <th>Location Box</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +26,9 @@
                 <tr>
                     <td>{{ item.name }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td>{{ item.location }}</td>
+                    <td>{{ item.location_stack }}</td>
+                    <td>{{ item.location_row }}</td>
+                    <td>{{ item.location_box }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -48,11 +48,13 @@ def add_equipment():
     if request.method == 'POST':
         name = request.form['name']
         quantity = int(request.form['quantity'])
-        location = request.form['location']
+        location_stack = request.form['location_stack']
+        location_row = request.form['location_row']
+        location_box = request.form['location_box']
         min_quantity = int(request.form['min_quantity'])  # Get the minimum quantity
         
         session = SessionLocal()
-        new_item = Item(name=name, quantity=quantity, location=location, min_quantity=min_quantity)
+        new_item = Item(name=name, quantity=quantity, location_stack=location_stack, location_row=location_row, location_box=location_box, min_quantity=min_quantity)
         session.add(new_item)
         session.commit()
         session.close()
