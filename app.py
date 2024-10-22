@@ -137,6 +137,7 @@ def delete_item():
             flash('Item deleted successfully!')
         else:
             flash('Item not found!')
+        
         session.close()
         return redirect(url_for('delete_item'))
     
@@ -144,6 +145,7 @@ def delete_item():
     items = session.query(Item).all()
     session.close()
     return render_template('delete_item.html', items=items)
+    
 
 
 
