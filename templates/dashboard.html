@@ -3,25 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management Dashboard</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Reset all margins and padding */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Layout */
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto; /* Enables scrolling if sidebar content is too long */
+        }
+
+        .sidebar h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #f1f1f1;
+        }
+
+        .sidebar a {
+            color: #fff;
+            padding: 10px 0;
+            text-decoration: none;
+            font-size: 1rem;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 220px; /* Space for sidebar */
+            padding: 20px;
+            background-color: #f4f4f9;
+            overflow-y: auto;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Lab Inventory Management</h2>
-        </div>
-        
-        <div class="dashboard-content">
-            <ul class="dashboard-menu">
-                <li><a class="menu-item" href="{{ url_for('view_inventory') }}">View Entire Inventory</a></li>
-                <li><a class="menu-item" href="{{ url_for('search_item') }}">Search for Equipment</a></li>
-                <li><a class="menu-item" href="{{ url_for('add_equipment') }}">Add New Equipment</a></li>
-                <li><a class="menu-item" href="{{ url_for('update_item') }}">Update Equipment Details</a></li>
-                <li><a class="menu-item" href="{{ url_for('delete_item') }}">Delete Equipment</a></li>
-                <li><a class="menu-item" href="{{ url_for('logout') }}">Logout</a></li>
-            </ul>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a href="{{ url_for('dashboard') }}">View Inventory</a>
+        <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
+        <a href="{{ url_for('view_inventory') }}">Inventory List</a>
+        <a href="{{ url_for('search_item') }}">Search Item</a>
+        <a href="{{ url_for('update_item') }}">Update Item</a>
+        <a href="{{ url_for('delete_item') }}">Delete Item</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Inventory Dashboard</h1>
+
+        <!-- Inventory Table -->
+        <div class="table-container">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Stack</th>
+                        <th>Row</th>
+                        <th>Box</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.location_stack }}</td>
+                        <td>{{ item.location_row }}</td>
+                        <td>{{ item.location_box }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+
 </body>
 </html>

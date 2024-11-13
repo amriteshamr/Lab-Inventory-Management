@@ -11,11 +11,25 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Home route - Show all equipment
+
+# Change the home route to redirect to login if user is not authenticated
 @app.route('/')
+def home():
+    return redirect(url_for('login'))
+
+
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     return render_template('dashboard.html')
+
+@app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    session = SessionLocal()
+    items = session.query(Item).all()
+    session.close()
+    return render_template('dashboard.html', items=items)
 
 
 # Login route
