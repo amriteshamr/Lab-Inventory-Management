@@ -23,13 +23,27 @@ def home():
 # def dashboard():
 #     return render_template('dashboard.html')
 
-@app.route('/dashboard')
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     session = SessionLocal()
+#     items = session.query(Item).all()
+#     session.close()
+#     return render_template('dashboard.html', items=items)
+
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     session = SessionLocal()
-    items = session.query(Item).all()
+    search_query = request.args.get('search', '')  # Get the search query from the URL parameters
+    if search_query:
+        # Query for items with names that contain the search query
+        items = session.query(Item).filter(Item.name.like(f'%{search_query}%')).all()
+    else:
+        # Fetch all items if no search query
+        items = session.query(Item).all()
     session.close()
-    return render_template('dashboard.html', items=items)
+    return render_template('dashboard.html', items=items, search_query=search_query)
 
 
 # Login route

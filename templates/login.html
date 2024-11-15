@@ -38,14 +38,14 @@
         /* Logo */
         .college-logo {
             max-width: 300px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         /* Form Title */
         h2 {
             color: #333;
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         /* Form Styling */
@@ -100,7 +100,7 @@
         <!-- College Logo -->
         <img src="{{ url_for('static', filename='media/thd-logo.png') }}" alt="College Logo" class="college-logo">
 
-        <h2>Login to Lab Inventory Management</h2>
+        <h2>Login to LabSync</h2>
 
         <!-- Login Form -->
         <form method="POST" action="{{ url_for('login') }}">
