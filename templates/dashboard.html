@@ -124,17 +124,18 @@ tr:nth-child(even) {
 .search-bar button:hover {
     background-color: #0056b3;
 }
+
+
     </style>
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2>Dashboard</h2>
+        <h2>LabSync</h2>
         <a href="{{ url_for('dashboard') }}">View Inventory</a>
         <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
         <a href="{{ url_for('view_inventory') }}">Inventory List</a>
-        <a href="{{ url_for('search_item') }}">Search Item</a>
         <a href="{{ url_for('update_item') }}">Update Item</a>
         <a href="{{ url_for('delete_item') }}">Delete Item</a>
         <a href="{{ url_for('logout') }}">Logout</a>
@@ -142,9 +143,10 @@ tr:nth-child(even) {
 
     <!-- Main Content -->
     <div class="main-content">
-        <h1>Inventory Dashboard</h1>
+        <h1>Dashboard</h1>
+        <br><br>
 
-        <!-- Search Bar -->
+       <!-- Search Bar -->
         <form class="search-bar" method="GET" action="{{ url_for('dashboard') }}">
             <input 
                 type="text" 
@@ -154,6 +156,7 @@ tr:nth-child(even) {
             >
             <button type="submit">Search</button>
         </form>
+
 
         <!-- Inventory Table -->
         <div class="table-container">

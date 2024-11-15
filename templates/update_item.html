@@ -2,23 +2,144 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Equipment Quantity</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Reset all margins and padding */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .update-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        select:focus, input:focus, button:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .select-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Adjust the layout of the 'Change in Quantity' label */
+        .quantity-change {
+    display: flex;
+    align-items: center; /* Vertically aligns the label and input */
+    gap: 15px; /* Space between label and input */
+    margin-bottom: 20px; /* Space below the input box */
+}
+
+.quantity-change label {
+    white-space: nowrap; /* Prevent label from wrapping */
+    width: auto; /* Allow label to take only necessary width */
+}
+
+
+        .quantity-change input {
+            width: 80%;
+        }
+
+        .quantity-change select {
+            width: 15%;
+        }
+    </style>
 </head>
 <body>
+
     <h2>Update Equipment Quantity</h2>
-    <form method="POST" action="{{ url_for('update_item') }}">
-        <label for="item_id">Select Equipment:</label>
-        <select name="item_id" id="item_id" required>
-            {% for item in items %}
-            <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="change_in_quantity">Change in Quantity:</label>
-        <input type="number" name="change_in_quantity" id="change_in_quantity" required>
-        <br>
+
+    <form method="POST" action="{{ url_for('update_item') }}" class="update-form">
+        <div class="select-container">
+            <label for="item_id">Select Equipment:</label>
+            <select name="item_id" id="item_id" required>
+                {% for item in items %}
+                <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="quantity-change">
+            <label for="change_in_quantity">Change in Quantity:</label>
+            <input type="number" name="change_in_quantity" id="change_in_quantity" required>
+            <select name="change_type" required>
+                <option value="increase">Increase</option>
+                <option value="decrease">Decrease</option>
+            </select>
+        </div>
+
         <button type="submit">Update Quantity</button>
     </form>
-    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
+    <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
 </body>
 </html>

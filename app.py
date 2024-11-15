@@ -101,17 +101,43 @@ def view_inventory():
     session.close()
     return render_template('view_inventory.html', items=items)
 
-@app.route('/search_item', methods=['GET', 'POST'])
-@login_required
-def search_item():
-    if request.method == 'POST':
-        search_query = request.form['search_query']
-        session = SessionLocal()
-        # Query for items with names that contain the search query
-        items = session.query(Item).filter(Item.name.like(f'%{search_query}%')).all()
-        session.close()
-        return render_template('search_results.html', items=items)
-    return render_template('search_item.html')
+
+
+# @app.route('/update_item', methods=['GET', 'POST'])
+# @login_required
+# def update_item():
+#     session = SessionLocal()
+#     if request.method == 'POST':
+#         item_id = request.form['item_id']
+#         change_in_quantity = int(request.form['change_in_quantity'])
+        
+#         # Fetch the item from the database
+#         item = session.query(Item).get(item_id)
+        
+#         if item:
+#             # Update the quantity (increase or decrease)
+#             item.quantity += change_in_quantity
+            
+#             # Ensure quantity doesn't go below 0
+#             if item.quantity < 0:
+#                 item.quantity = 0
+            
+#             # Check if quantity falls below the minimum threshold
+#             if item.quantity < item.min_quantity:
+#                 flash(f'Warning: The quantity of {item.name} is below the minimum threshold ({item.min_quantity}). Please reorder!')
+
+#             session.commit()
+#             flash(f'Quantity updated! New quantity of {item.name}: {item.quantity}')
+#         else:
+#             flash('Item not found!')
+        
+#         session.close()
+#         return redirect(url_for('update_item'))
+    
+#     # Fetch all items to display in the form
+#     items = session.query(Item).all()
+#     session.close()
+#     return render_template('update_item.html', items=items)
 
 @app.route('/update_item', methods=['GET', 'POST'])
 @login_required
@@ -120,17 +146,19 @@ def update_item():
     if request.method == 'POST':
         item_id = request.form['item_id']
         change_in_quantity = int(request.form['change_in_quantity'])
+        change_type = request.form['change_type']
         
         # Fetch the item from the database
         item = session.query(Item).get(item_id)
         
         if item:
             # Update the quantity (increase or decrease)
-            item.quantity += change_in_quantity
-            
-            # Ensure quantity doesn't go below 0
-            if item.quantity < 0:
-                item.quantity = 0
+            if change_type == 'increase':
+                item.quantity += change_in_quantity
+            elif change_type == 'decrease':
+                item.quantity -= change_in_quantity
+                if item.quantity < 0:
+                    item.quantity = 0
             
             # Check if quantity falls below the minimum threshold
             if item.quantity < item.min_quantity:
@@ -148,6 +176,7 @@ def update_item():
     items = session.query(Item).all()
     session.close()
     return render_template('update_item.html', items=items)
+
 
 
 @app.route('/delete_item', methods=['GET', 'POST'])
