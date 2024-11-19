@@ -11,7 +11,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         /* Background */
@@ -93,12 +93,17 @@
             font-size: 0.875rem;
             color: #777;
         }
+
+        img{
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <!-- College Logo -->
-        <img src="{{ url_for('static', filename='media/thd-logo.png') }}" alt="College Logo" class="college-logo">
+        <img src="{{ url_for('static', filename='media/thd-logo-white.png') }}" alt="College Logo" class="college-logo">
 
         <h2>Login to LabSync</h2>
 

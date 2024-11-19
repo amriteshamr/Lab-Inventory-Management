@@ -6,6 +6,10 @@
     <title>Add New Equipment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
+
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
         h2{
             color: #33bd2c;
         }
@@ -20,9 +24,54 @@
         .back-btn:hover {
             background-color: #2980b9;
         }
+        /* Fixed Sidebar */
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto; /* Enables scrolling if sidebar content is too long */
+}
+
+.sidebar h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #33bd2c;
+}
+
+.sidebar a {
+    color: #ffffff;
+    padding: 10px 0;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    transition: background 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #198b00;
+}
+
     </style>
 </head>
 <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>LabSync</h2>
+        <a href="{{ url_for('dashboard') }}">View Inventory</a>
+        <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
+        <a href="{{ url_for('view_inventory') }}">Inventory List</a>
+        <a href="{{ url_for('update_item') }}">Update Item</a>
+        <a href="{{ url_for('delete_item') }}">Delete Item</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
     <div class="add-equipment-container">
         <h2>Add New Equipment</h2>
         <form method="POST" action="{{ url_for('add_equipment') }}">

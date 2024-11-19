@@ -11,7 +11,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -111,35 +111,80 @@
         .quantity-change select {
             width: 15%;
         }
+        /* Fixed Sidebar */
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto; /* Enables scrolling if sidebar content is too long */
+}
+
+.sidebar h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #33bd2c;
+}
+
+.sidebar a {
+    color: #ffffff;
+    padding: 10px 0;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    transition: background 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #198b00;
+}
     </style>
 </head>
 <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>LabSync</h2>
+        <a href="{{ url_for('dashboard') }}">View Inventory</a>
+        <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
+        <a href="{{ url_for('view_inventory') }}">Inventory List</a>
+        <a href="{{ url_for('update_item') }}">Update Item</a>
+        <a href="{{ url_for('delete_item') }}">Delete Item</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div>
+        <h2>Update Equipment Quantity</h2>
 
-    <h2>Update Equipment Quantity</h2>
+        <form method="POST" action="{{ url_for('update_item') }}" class="update-form">
+            <div class="select-container">
+                <label for="item_id">Select Equipment:</label>
+                <select name="item_id" id="item_id" required>
+                    {% for item in items %}
+                    <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <form method="POST" action="{{ url_for('update_item') }}" class="update-form">
-        <div class="select-container">
-            <label for="item_id">Select Equipment:</label>
-            <select name="item_id" id="item_id" required>
-                {% for item in items %}
-                <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
-                {% endfor %}
-            </select>
-        </div>
+            <div class="quantity-change">
+                <label for="change_in_quantity">Change in Quantity:</label>
+                <input type="number" name="change_in_quantity" id="change_in_quantity" required>
+                <select name="change_type" required>
+                    <option value="increase">Increase</option>
+                    <option value="decrease">Decrease</option>
+                </select>
+            </div>
 
-        <div class="quantity-change">
-            <label for="change_in_quantity">Change in Quantity:</label>
-            <input type="number" name="change_in_quantity" id="change_in_quantity" required>
-            <select name="change_type" required>
-                <option value="increase">Increase</option>
-                <option value="decrease">Decrease</option>
-            </select>
-        </div>
+            <button type="submit">Update Quantity</button>
+        </form>
 
-        <button type="submit">Update Quantity</button>
-    </form>
-
-    <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
 
 </body>
 </html>
