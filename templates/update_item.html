@@ -1,190 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Equipment Quantity</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-        /* Reset all margins and padding */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Equipment Quantity</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <style>
+            /* Reset all margins and padding */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: 'Poppins', sans-serif;
+            }
 
-        body {
-            background-color: #f4f4f9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
+            body {
+                background-color: #f4f4f9;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
 
-        h2 {
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #333;
-        }
+            h2 {
+                margin-bottom: 20px;
+                font-size: 1.8rem;
+                color: #333;
+            }
 
-        .update-form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 100%;
-        }
+            .update-form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 1000px;
+                max-width: 100%;
+            }
 
-        label {
-            font-size: 1rem;
-            color: #333;
-            margin-bottom: 5px;
-            display: block;
-        }
+            label {
+                font-size: 1rem;
+                color: #333;
+                margin-bottom: 5px;
+                display: block;
+            }
 
-        select, input, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+            select, input, button {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                font-size: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
 
-        select:focus, input:focus, button:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+            select:focus, input:focus, button:focus {
+                border-color: #007bff;
+                outline: none;
+            }
 
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
+            button {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 1.1rem;
+            }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+            button:hover {
+                background-color: #0056b3;
+            }
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 1rem;
-            text-decoration: none;
-            color: #007bff;
-        }
+            .back-link {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 1rem;
+                text-decoration: none;
+                color: #007bff;
+            }
 
-        .back-link:hover {
-            text-decoration: underline;
-        }
+            .back-link:hover {
+                text-decoration: underline;
+            }
 
-        .select-container {
-            display: flex;
-            flex-direction: column;
-        }
+            .select-container {
+                display: flex;
+                flex-direction: column;
+            }
 
-        /* Adjust the layout of the 'Change in Quantity' label */
-        .quantity-change {
-    display: flex;
-    align-items: center; /* Vertically aligns the label and input */
-    gap: 15px; /* Space between label and input */
-    margin-bottom: 20px; /* Space below the input box */
-}
+            /* Adjust the layout of the 'Change in Quantity' label */
+            .quantity-change {
+        display: flex;
+        align-items: center; /* Vertically aligns the label and input */
+        gap: 15px; /* Space between label and input */
+        margin-bottom: 20px; /* Space below the input box */
+    }
 
-.quantity-change label {
-    white-space: nowrap; /* Prevent label from wrapping */
-    width: auto; /* Allow label to take only necessary width */
-}
+    .quantity-change label {
+        white-space: nowrap; /* Prevent label from wrapping */
+        width: auto; /* Allow label to take only necessary width */
+    }
 
 
-        .quantity-change input {
-            width: 80%;
-        }
+            .quantity-change input {
+                width: 80%;
+            }
 
-        .quantity-change select {
-            width: 15%;
-        }
-        /* Fixed Sidebar */
-.sidebar {
-    width: 200px;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto; /* Enables scrolling if sidebar content is too long */
-}
+            .quantity-change select {
+                width: 15%;
+            }
+            /* Fixed Sidebar */
+    .sidebar {
+        width: 200px;
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow-y: auto; /* Enables scrolling if sidebar content is too long */
+    }
 
-.sidebar h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    text-align: center;
-    color: #33bd2c;
-}
+    .sidebar h2 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+        color: #33bd2c;
+    }
 
-.sidebar a {
-    color: #ffffff;
-    padding: 10px 0;
-    text-decoration: none;
-    font-size: 1rem;
-    display: block;
-    transition: background 0.3s;
-}
+    .sidebar a {
+        color: #ffffff;
+        padding: 10px 0;
+        text-decoration: none;
+        font-size: 1rem;
+        display: block;
+        transition: background 0.3s;
+    }
 
-.sidebar a:hover {
-    background-color: #198b00;
-}
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>LabSync</h2>
-        <a href="{{ url_for('dashboard') }}">View Inventory</a>
-        <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
-        <a href="{{ url_for('view_inventory') }}">Inventory List</a>
-        <a href="{{ url_for('update_item') }}">Update Item</a>
-        <a href="{{ url_for('delete_item') }}">Delete Item</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
-    </div>
-    <div>
-        <h2>Update Equipment Quantity</h2>
+    .sidebar a:hover {
+        background-color: #198b00;
+    }
+        </style>
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>LabSync</h2>
+            <a href="{{ url_for('dashboard') }}">View Inventory</a>
+            <a href="{{ url_for('add_equipment') }}">Add Equipment</a>
+            <a href="{{ url_for('view_inventory') }}">Inventory List</a>
+            <a href="{{ url_for('update_item') }}">Update Item</a>
+            <a href="{{ url_for('delete_item') }}">Delete Item</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        <div>
+            <h2>Update Equipment Quantity</h2>
 
-        <form method="POST" action="{{ url_for('update_item') }}" class="update-form">
-            <div class="select-container">
-                <label for="item_id">Select Equipment:</label>
-                <select name="item_id" id="item_id" required>
-                    {% for item in items %}
-                    <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
-                    {% endfor %}
-                </select>
-            </div>
+            <form method="POST" action="{{ url_for('update_item') }}" class="update-form">
+                <div class="select-container">
+                    <label for="item_id">Select Equipment:</label>
+                    <select name="item_id" id="item_id" required>
+                        {% for item in items %}
+                        <option value="{{ item.id }}">{{ item.name }} (Current Quantity: {{ item.quantity }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <div class="quantity-change">
-                <label for="change_in_quantity">Change in Quantity:</label>
-                <input type="number" name="change_in_quantity" id="change_in_quantity" required>
-                <select name="change_type" required>
-                    <option value="increase">Increase</option>
-                    <option value="decrease">Decrease</option>
-                </select>
-            </div>
+                <div class="quantity-change">
+                    <label for="change_in_quantity">Change in Quantity:</label>
+                    <input type="number" name="change_in_quantity" id="change_in_quantity" required>
+                    <select name="change_type" required>
+                        <option value="increase">Increase</option>
+                        <option value="decrease">Decrease</option>
+                    </select>
+                </div>
 
-            <button type="submit">Update Quantity</button>
-        </form>
+                <button type="submit">Update Quantity</button>
+            </form>
 
-        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
-    </div>
+            <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        </div>
 
-</body>
-</html>
+    </body>
+    </html>

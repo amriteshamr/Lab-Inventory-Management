@@ -18,32 +18,37 @@ def home():
     return redirect(url_for('login'))
 
 
-# @app.route('/dashboard')
-# @login_required
-# def dashboard():
-#     return render_template('dashboard.html')
 
-# @app.route('/dashboard')
+# @app.route('/dashboard', methods=['GET', 'POST'])
 # @login_required
 # def dashboard():
 #     session = SessionLocal()
-#     items = session.query(Item).all()
+#     search_query = request.args.get('search', '')  # Get the search query from the URL parameters
+#     if search_query:
+#         # Query for items with names that contain the search query
+#         items = session.query(Item).filter(Item.name.like(f'%{search_query}%')).all()
+#     else:
+#         # Fetch all items if no search query
+#         items = session.query(Item).all()
 #     session.close()
-#     return render_template('dashboard.html', items=items)
+#     return render_template('dashboard.html', items=items, search_query=search_query)
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     session = SessionLocal()
     search_query = request.args.get('search', '')  # Get the search query from the URL parameters
+    
     if search_query:
-        # Query for items with names that contain the search query
-        items = session.query(Item).filter(Item.name.like(f'%{search_query}%')).all()
+        # Query for items with names that contain the search query, ordered by recently added
+        items = session.query(Item).filter(Item.name.like(f'%{search_query}%')).order_by(Item.id.desc()).all()
     else:
-        # Fetch all items if no search query
-        items = session.query(Item).all()
+        # Fetch all items ordered by recently added
+        items = session.query(Item).order_by(Item.id.desc()).all()
+    
     session.close()
     return render_template('dashboard.html', items=items, search_query=search_query)
+
 
 
 # Login route
@@ -93,51 +98,44 @@ def add_equipment():
     return render_template('add_equipment.html')
 
 
+# @app.route('/view_inventory')
+# @login_required
+# def view_inventory():
+#     session = SessionLocal()
+#     items = session.query(Item).all()
+#     session.close()
+#     return render_template('view_inventory.html', items=items)
+
 @app.route('/view_inventory')
 @login_required
 def view_inventory():
     session = SessionLocal()
-    items = session.query(Item).all()
+    # Get sorting parameters from the query string
+    sort_column = request.args.get('sort_column', 'id')  # Default sorting by ID
+    sort_order = request.args.get('sort_order', 'asc')  # Default order ascending
+
+    # Validate and map column names to prevent SQL injection
+    valid_columns = {
+        'name': Item.name,
+        'quantity': Item.quantity,
+        'location_stack': Item.location_stack,
+        'location_row': Item.location_row,
+        'location_box': Item.location_box
+    }
+
+    if sort_column in valid_columns:
+        sort_attr = valid_columns[sort_column]
+        if sort_order == 'desc':
+            sort_attr = sort_attr.desc()
+        items = session.query(Item).order_by(sort_attr).all()
+    else:
+        # Default sorting if invalid column
+        items = session.query(Item).order_by(Item.id).all()
+
     session.close()
-    return render_template('view_inventory.html', items=items)
+    return render_template('view_inventory.html', items=items, sort_column=sort_column, sort_order=sort_order)
 
 
-
-# @app.route('/update_item', methods=['GET', 'POST'])
-# @login_required
-# def update_item():
-#     session = SessionLocal()
-#     if request.method == 'POST':
-#         item_id = request.form['item_id']
-#         change_in_quantity = int(request.form['change_in_quantity'])
-        
-#         # Fetch the item from the database
-#         item = session.query(Item).get(item_id)
-        
-#         if item:
-#             # Update the quantity (increase or decrease)
-#             item.quantity += change_in_quantity
-            
-#             # Ensure quantity doesn't go below 0
-#             if item.quantity < 0:
-#                 item.quantity = 0
-            
-#             # Check if quantity falls below the minimum threshold
-#             if item.quantity < item.min_quantity:
-#                 flash(f'Warning: The quantity of {item.name} is below the minimum threshold ({item.min_quantity}). Please reorder!')
-
-#             session.commit()
-#             flash(f'Quantity updated! New quantity of {item.name}: {item.quantity}')
-#         else:
-#             flash('Item not found!')
-        
-#         session.close()
-#         return redirect(url_for('update_item'))
-    
-#     # Fetch all items to display in the form
-#     items = session.query(Item).all()
-#     session.close()
-#     return render_template('update_item.html', items=items)
 
 @app.route('/update_item', methods=['GET', 'POST'])
 @login_required
