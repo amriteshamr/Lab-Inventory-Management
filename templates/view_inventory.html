@@ -5,98 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Inventory</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<style>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
 
-    *{
-        font-family: 'Poppins', sans-serif;
-    }
-    .sort-form {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        body {
+            margin: 0;
+            display: flex;
+            background-color: #f9f9f9;
+        }
 
-.sort-form select, .sort-form button {
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.sort-form button {
-    background-color: #33bd2c;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.sort-form button:hover {
-    background-color: #198b00;
-}
-        /* Fixed Sidebar */
         .sidebar {
-        width: 200px;
-        background-color: #333;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        overflow-y: auto; /* Enables scrolling if sidebar content is too long */
-    }
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
 
-    .sidebar h2 {
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-        text-align: center;
-        color: #33bd2c;
-    }
+        .sidebar h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #33bd2c;
+        }
 
-    .sidebar a {
-        color: #ffffff;
-        padding: 10px 0;
-        text-decoration: none;
-        font-size: 1rem;
-        display: block;
-        transition: background 0.3s;
-    }
+        .sidebar a {
+            color: #ffffff;
+            padding: 10px 0;
+            text-decoration: none;
+            font-size: 1rem;
+            display: block;
+            transition: background 0.3s;
+        }
 
-    .sidebar a:hover {
-        background-color: #198b00;
-    }
+        .sidebar a:hover {
+            background-color: #198b00;
+        }
 
-    .filter-form {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .inventory-container {
+            padding: 20px;
+            width: calc(100% - 220px);
+        }
 
-.filter-form select, .filter-form input, .filter-form button {
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
 
-.filter-form button {
-    background-color: #33bd2c;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+        .filter-form, .sort-form {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.filter-form button:hover {
-    background-color: #198b00;
-}
+        .filter-form select, .filter-form input, 
+        .filter-form button, .sort-form select, 
+        .sort-form button {
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
 
-</style>
+        .filter-form button, .sort-form button {
+            background-color: #33bd2c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
+        .filter-form button:hover, .sort-form button:hover {
+            background-color: #198b00;
+        }
+
+        .reset-button {
+            padding: 8px 15px;
+            font-size: 1rem;
+            background-color: #f44336; /* Red color for reset */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .reset-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .inventory-table th, .inventory-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .inventory-table th {
+            background-color: #33bd2c;
+            color: white;
+        }
+
+        .inventory-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .inventory-table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -108,11 +144,12 @@
         <a href="{{ url_for('delete_item') }}">Delete Item</a>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
+
+    <!-- Main Content -->
     <div class="inventory-container">
         <h2>Lab Inventory</h2>
-        <a class="back-link" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
 
-        <!-- Filtering Form -->
+        <!-- Filter Form -->
         <form method="GET" action="{{ url_for('view_inventory') }}" class="filter-form">
             <label for="filter_column">Filter By:</label>
             <select name="filter_column" id="filter_column">
@@ -125,12 +162,20 @@
             </select>
 
             <label for="filter_value">Value:</label>
-            <input type="text" name="filter_value" id="filter_value" value="{{ filter_value|default('') }}">
+            <input type="text" name="filter_value" id="filter_value" list="filter_suggestions" value="{{ filter_value|default('') }}">
+            <datalist id="filter_suggestions">
+                {% if filter_column %}
+                {% for suggestion in suggestions %}
+                <option value="{{ suggestion }}"></option>
+                {% endfor %}
+                {% endif %}
+            </datalist>
 
             <button type="submit">Apply Filter</button>
+            <a href="{{ url_for('view_inventory') }}" class="reset-button">Reset</a>
         </form>
 
-        <!-- Sorting Form -->
+        <!-- Sort Form -->
         <form method="GET" action="{{ url_for('view_inventory') }}" class="sort-form">
             <label for="sort_column">Sort By:</label>
             <select name="sort_column" id="sort_column">
@@ -150,6 +195,7 @@
             <button type="submit">Sort</button>
         </form>
 
+        <!-- Inventory Table -->
         <div class="table-container">
             <table class="inventory-table">
                 <thead>
@@ -175,5 +221,12 @@
             </table>
         </div>
     </div>
+
+    <script>
+        // Fetch suggestions dynamically based on selected column
+        document.getElementById('filter_column').addEventListener('change', function () {
+            document.getElementById('filter_value').value = ''; // Clear existing input
+        });
+    </script>
 </body>
 </html>
