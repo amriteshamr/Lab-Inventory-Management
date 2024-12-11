@@ -6,137 +6,95 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-        /* Reset all margins and padding */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Body Layout */
-body {
-    display: flex;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* Fixed Sidebar */
-.sidebar {
-    width: 200px;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto; /* Enables scrolling if sidebar content is too long */
-}
-
-.sidebar h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    text-align: center;
-    color: #33bd2c;
-}
-
-.sidebar a {
-    color: #ffffff;
-    padding: 10px 0;
-    text-decoration: none;
-    font-size: 1rem;
-    display: block;
-    transition: background 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: #198b00;
-}
-
-/* Main Content */
-.main-content {
-    flex-grow: 1;
-    margin-left: 220px; /* Space for sidebar */
-    padding: 20px;
-    background-color: #f4f4f9;
-    overflow-y: auto;
-}
-
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #007bff;
-    color: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-/* Search Bar Styling */
-.search-bar {
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
     
-    margin-bottom: 20px;
-    display: flex;
+        h1 {
+            font-size: 2.5rem;
+            color: #33bd2c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     
-    align-items: flex-start; /* Align items to the right */
-    gap: 10px;
-
-}
-
-.search-bar input[type="text"] {
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex: 1; /* Adjust width relative to its container */
-    max-width: 75%; /* Limit the width */
-}
-
-.search-bar button {
-    padding: 8px 20px;
-    font-size: 1rem;
-    background-color: #33bd2c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    max-width: 25%;
-}
-
-.search-bar button:hover {
-    background-color: #198b00;
-}
-
-h1{
-    color: #198b00;
-    font-size: 2.5rem;
-}
-
-
-
+        .search-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+    
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    
+        .search-bar button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #33bd2c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        .search-bar button:hover {
+            background-color: #198b00;
+        }
+    
+        .table-container {
+            width: 90%;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+    
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+    
+        .inventory-table th, .inventory-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+    
+        .inventory-table th {
+            background-color: #33bd2c;
+            color: white;
+        }
+    
+        .inventory-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        .inventory-table tr:hover {
+            background-color: #e9ecef;
+        }
     </style>
+    
+    
 </head>
 <body>
-
-    <!-- Sidebar -->
     <div class="sidebar">
         <h2>LabSync</h2>
         <a href="{{ url_for('dashboard') }}">View Inventory</a>
@@ -146,25 +104,12 @@ h1{
         <a href="{{ url_for('delete_item') }}">Delete Item</a>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
-
-    <!-- Main Content -->
     <div class="main-content">
         <h1>Dashboard</h1>
-        <br><br>
-
-       <!-- Search Bar -->
         <form class="search-bar" method="GET" action="{{ url_for('dashboard') }}">
-            <input 
-                type="text" 
-                name="search" 
-                placeholder="Search equipment..." 
-                value="{{ search_query|default('') }}"
-            >
+            <input type="text" name="search" placeholder="Search equipment..." value="{{ search_query|default('') }}">
             <button type="submit">Search</button>
         </form>
-
-
-        <!-- Inventory Table -->
         <div class="table-container">
             <table class="inventory-table">
                 <thead>
@@ -190,6 +135,5 @@ h1{
             </table>
         </div>
     </div>
-
 </body>
 </html>

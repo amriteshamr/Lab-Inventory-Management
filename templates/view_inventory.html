@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Inventory</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             display: flex;
-            background-color: #f9f9f9;
         }
 
         .sidebar {
@@ -31,14 +27,14 @@
         }
 
         .sidebar h2 {
-            margin-bottom: 1rem;
             font-size: 1.5rem;
             text-align: center;
             color: #33bd2c;
+            margin-bottom: 1.5rem;
         }
 
         .sidebar a {
-            color: #ffffff;
+            color: #fff;
             padding: 10px 0;
             text-decoration: none;
             font-size: 1rem;
@@ -50,31 +46,35 @@
             background-color: #198b00;
         }
 
-        .inventory-container {
+        .main-content {
+            margin-left: 220px;
             padding: 20px;
-            width: calc(100% - 220px);
+            flex-grow: 1;
         }
 
         h2 {
-            color: #333;
+            text-align: center;
             font-size: 2rem;
+            color: #333;
             margin-bottom: 20px;
         }
 
         .filter-form, .sort-form {
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
-        .filter-form select, .filter-form input, 
-        .filter-form button, .sort-form select, 
+        .filter-form select, .filter-form input,
+        .filter-form button, .sort-form select,
         .sort-form button {
-            padding: 8px;
+            padding: 10px;
             font-size: 1rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         .filter-form button, .sort-form button {
@@ -89,13 +89,11 @@
         }
 
         .reset-button {
-            padding: 8px 15px;
-            font-size: 1rem;
-            background-color: #f44336; /* Red color for reset */
+            background-color: #f44336;
             color: white;
             border: none;
-            border-radius: 4px;
-            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
         }
 
@@ -105,23 +103,25 @@
 
         .table-container {
             overflow-x: auto;
+            margin-top: 20px;
         }
 
         .inventory-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
         .inventory-table th, .inventory-table td {
             border: 1px solid #ddd;
             padding: 10px;
-            text-align: left;
+            text-align: center;
         }
 
         .inventory-table th {
             background-color: #33bd2c;
             color: white;
+            position: sticky;
+            top: 0;
         }
 
         .inventory-table tr:nth-child(even) {
@@ -129,12 +129,11 @@
         }
 
         .inventory-table tr:hover {
-            background-color: #f1f1f1;
+            background-color: #e9ecef;
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
     <div class="sidebar">
         <h2>LabSync</h2>
         <a href="{{ url_for('dashboard') }}">View Inventory</a>
@@ -144,11 +143,8 @@
         <a href="{{ url_for('delete_item') }}">Delete Item</a>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
-
-    <!-- Main Content -->
-    <div class="inventory-container">
+    <div class="main-content">
         <h2>Lab Inventory</h2>
-
         <!-- Filter Form -->
         <form method="GET" action="{{ url_for('view_inventory') }}" class="filter-form">
             <label for="filter_column">Filter By:</label>
@@ -160,17 +156,8 @@
                 <option value="location_row" {% if filter_column == 'location_row' %}selected{% endif %}>Row</option>
                 <option value="location_box" {% if filter_column == 'location_box' %}selected{% endif %}>Box</option>
             </select>
-
             <label for="filter_value">Value:</label>
-            <input type="text" name="filter_value" id="filter_value" list="filter_suggestions" value="{{ filter_value|default('') }}">
-            <datalist id="filter_suggestions">
-                {% if filter_column %}
-                {% for suggestion in suggestions %}
-                <option value="{{ suggestion }}"></option>
-                {% endfor %}
-                {% endif %}
-            </datalist>
-
+            <input type="text" name="filter_value" id="filter_value" value="{{ filter_value|default('') }}">
             <button type="submit">Apply Filter</button>
             <a href="{{ url_for('view_inventory') }}" class="reset-button">Reset</a>
         </form>
@@ -185,13 +172,11 @@
                 <option value="location_row" {% if sort_column == 'location_row' %}selected{% endif %}>Row</option>
                 <option value="location_box" {% if sort_column == 'location_box' %}selected{% endif %}>Box</option>
             </select>
-
             <label for="sort_order">Order:</label>
             <select name="sort_order" id="sort_order">
                 <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
                 <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
             </select>
-
             <button type="submit">Sort</button>
         </form>
 
@@ -221,12 +206,5 @@
             </table>
         </div>
     </div>
-
-    <script>
-        // Fetch suggestions dynamically based on selected column
-        document.getElementById('filter_column').addEventListener('change', function () {
-            document.getElementById('filter_value').value = ''; // Clear existing input
-        });
-    </script>
 </body>
 </html>
