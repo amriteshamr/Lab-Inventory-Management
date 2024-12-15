@@ -99,51 +99,6 @@ def add_equipment():
 
 
 
-# @app.route('/view_inventory')
-# @login_required
-# def view_inventory():
-#     session = SessionLocal()
-
-#     # Get sorting and filtering parameters
-#     sort_column = request.args.get('sort_column', 'id')  # Default sorting by ID
-#     sort_order = request.args.get('sort_order', 'asc')  # Default order ascending
-#     filter_column = request.args.get('filter_column', '')  # Column to filter
-#     filter_value = request.args.get('filter_value', '')  # Value to filter by
-
-#     # Validate column names to prevent SQL injection
-#     valid_columns = {
-#         'name': Item.name,
-#         'quantity': Item.quantity,
-#         'location_stack': Item.location_stack,
-#         'location_row': Item.location_row,
-#         'location_box': Item.location_box
-#     }
-
-#     query = session.query(Item)
-
-#     # Apply filtering if a valid filter column and value are provided
-#     if filter_column in valid_columns and filter_value:
-#         query = query.filter(valid_columns[filter_column] == filter_value)
-
-#     # Apply sorting
-#     if sort_column in valid_columns:
-#         sort_attr = valid_columns[sort_column]
-#         if sort_order == 'desc':
-#             sort_attr = sort_attr.desc()
-#         query = query.order_by(sort_attr)
-
-#     # Fetch the filtered and sorted items
-#     items = query.all()
-#     session.close()
-
-#     return render_template(
-#         'view_inventory.html',
-#         items=items,
-#         sort_column=sort_column,
-#         sort_order=sort_order,
-#         filter_column=filter_column,
-#         filter_value=filter_value
-#     )
 
 @app.route('/view_inventory')
 @login_required
